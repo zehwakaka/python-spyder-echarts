@@ -1,0 +1,191 @@
+{
+  "RootName": "DataModels",
+  "CTVER": "43543234",
+  "TableCount": 2,
+  "Count": 1,
+  "items": [{
+    "ID": 1,
+    "Name": "模型1",
+    "CreateDate": "2020/8/12 18:51:18",
+    "OrderNo": 1,
+    "Tables": {
+      "Count": 2,
+      "items": [
+        {
+          "ID": 3,
+          "Name": "province_daily_datas",
+          "Caption": "各省份每日疫情数据",
+          "CreateDate": "2020/8/12 19:05:01",
+          "OrderNo": 1,
+          "GraphDesc": "Left=144.00\r\nTop=51.00",
+          "MetaFields": {
+            "Count": 9,
+            "items": [
+              {
+                "ID": 1,
+                "Name": "Id",
+                "OrderNo": 1,
+                "DisplayName": "编号",
+                "DataType": 2,
+                "KeyFieldType": 1,
+                "DefaultValue": "{auto_increment}",
+                "Nullable": true
+              },
+              {
+                "ID": 2,
+                "Name": "provinceName",
+                "OrderNo": 2,
+                "DisplayName": "省份名称",
+                "DataType": 1,
+                "Nullable": true
+              },
+              {
+                "ID": 3,
+                "Name": "provinceShortName",
+                "OrderNo": 3,
+                "DisplayName": "省份缩写",
+                "DataType": 1,
+                "Nullable": true
+              },
+              {
+                "ID": 4,
+                "Name": "currentConfirmedCount",
+                "OrderNo": 4,
+                "DisplayName": "现有确诊病例数",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 5,
+                "Name": "confirmedCount",
+                "OrderNo": 5,
+                "DisplayName": "累计确诊",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 6,
+                "Name": "suspectedCount",
+                "OrderNo": 6,
+                "DisplayName": "疑似病例",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 7,
+                "Name": "curedCount ",
+                "OrderNo": 7,
+                "DisplayName": "累计治愈",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 8,
+                "Name": "deadCount",
+                "OrderNo": 8,
+                "DisplayName": "累计死亡",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 10,
+                "Name": "pub_time",
+                "OrderNo": 9,
+                "DisplayName": "时间",
+                "DataType": 1,
+                "Nullable": true
+              }
+            ]
+          }
+        },
+        {
+          "ID": 2,
+          "Name": "city_daily_datas",
+          "Caption": "各国内城市每日疫情数据",
+          "CreateDate": "2020/8/13 14:35:11",
+          "OrderNo": 2,
+          "GraphDesc": "Left=460.00\r\nTop=10.00",
+          "MetaFields": {
+            "Count": 9,
+            "items": [
+              {
+                "ID": 1,
+                "Name": "Id",
+                "OrderNo": 1,
+                "DisplayName": "编号",
+                "DataType": 2,
+                "KeyFieldType": 1,
+                "DefaultValue": "{auto_increment}",
+                "Nullable": true
+              },
+              {
+                "ID": 2,
+                "Name": "cityName",
+                "OrderNo": 2,
+                "DisplayName": "城市名称",
+                "DataType": 1,
+                "Nullable": true
+              },
+              {
+                "ID": 3,
+                "Name": "currentConfirmedCount",
+                "OrderNo": 3,
+                "DisplayName": "现有确诊",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 4,
+                "Name": "confirmedCount",
+                "OrderNo": 4,
+                "DisplayName": "累计确诊",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 22,
+                "Name": "suspectedCount",
+                "OrderNo": 5,
+                "DisplayName": "疑似病例",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 23,
+                "Name": "curedCount",
+                "OrderNo": 6,
+                "DisplayName": "治愈人数",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 24,
+                "Name": "deadCount",
+                "OrderNo": 7,
+                "DisplayName": "死亡人数",
+                "DataType": 2,
+                "Nullable": true
+              },
+              {
+                "ID": 25,
+                "Name": "pub_date",
+                "OrderNo": 8,
+                "DisplayName": "时间",
+                "DataType": 1,
+                "Nullable": true
+              },
+              {
+                "ID": 26,
+                "Name": "province",
+                "OrderNo": 9,
+                "DisplayName": "所属省份",
+                "DataType": 1,
+                "Nullable": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }]
+}

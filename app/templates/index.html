@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据可视化</title>
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <script type = "text/javascript" src="{{ url_for('static', filename='hello.js') }}"></script>
+    <script type = "text/javascript" src="{{ url_for('static', filename='echarts.js') }}"></script>
+    <script type = "text/javascript" src="{{ url_for('static', filename='jquery-3.5.1.min.js')}}"></script>
+    <script type = "text/javascript" src="{{ url_for('static', filename='china.js') }}"></script>
+<!--     <script type = "text/javascript" src="{{ url_for('static', filename='dataTables.min.js') }}"></script> -->
+<!--     <link rel="stylesheet" type="text/css" href="../static/css/jquery.dataTables.min.css"/> -->
+    
+  </head>
+  <body>
+    <!-- 头部 -->
+    <header>
+      <h1>新型冠状病毒肺炎疫情实时动态—COVID-19 Global Pandemic Real-time Report</h1>
+      <div class="show-time"></div>
+      <script src="../static/getnowtime.js"></script>
+    </header>
+
+
+      <!-- 页面主体 -->
+    <section class="mainbox">
+      <!-- 左侧盒子 -->
+      <div class="column">
+        <div class="panel bar">
+          <h2>国内各省份累计确诊病例数柱状图Top15</h2>
+          <!-- 图表放置盒子 -->
+          <div class="chart"></div>
+          <!-- 伪元素绘制盒子下边角 -->
+          <div class="panel-footer"></div>
+        </div>
+        <div class="panel line">
+          <h2>国内现存确诊人数折线图
+            <a class="a-active" href="javascript:;">2020</a>
+
+          </h2>
+          <div class="chart"></div>
+          <div class="panel-footer"></div>
+        </div>
+        <div class="panel pie">
+          <h2>中国省份现存确诊人数Top5</h2>
+          <div class="chart"></div>
+          <div class="panel-footer"></div>
+        </div>
+      </div>
+      <!-- 中间盒子 -->
+      <div class="column">
+        <!-- 头部 no模块 -->
+        <div class="no">
+          <div class="no-bd">
+            <ul>
+              <li>        </li>
+              <li>现存确诊</li>
+<!--               <li>境外输入</li>
+              <li>现存无症状</li> -->
+              <li>累计确诊</li>
+              <li>累计死亡</li>
+              <li>累计治愈</li>
+            </ul>
+            <ul></ul>
+          </div>
+          <div class="no-hd">
+            <ul>
+              <li>全球</li>
+              <li>7686083</li>
+              <li>21708258</li>
+              <li>778301</li>
+              <li>13243674</li>
+<!--               <li>12</li>
+              <li>12</li> -->
+            </ul>
+          </div>
+          <div class="no-bd">
+            <ul>
+              <li>        </li>
+              <li>较昨日-33536</li>
+<!--               <li>境外输入</li>
+              <li>现存无症状</li> -->
+              <li>较昨日+81221</li>
+              <li>较昨日+1509</li>
+              <li>较昨日+113248</li>
+            </ul>
+            <ul><li></li></ul>
+          </div>
+          <div class="no-hd">
+            <ul>
+              <li>国内</li>
+              <li>1495</li>
+              <li>2300</li>
+              <li>351</li>
+              <li>89905</li>
+              <li>4710</li>
+              <li>83700</li>
+            </ul>
+          </div>
+          <div class="no-bd">
+            <ul>
+              <li>        </li>
+              <li>较昨日+3</li>
+              <li>较昨日+22</li>
+              <li>较昨日+32</li>
+              <li>较昨日+144</li>
+              <li>较昨日无变化</li>
+              <li>较昨日+141</li>
+            </ul>
+          </div>
+        </div>
+        <!-- map模块 -->
+        <div class="map">
+          <div class="map1"></div>
+          <div class="map2"></div>
+          <div class="map3"></div>
+          <div class="chart"></div>
+        </div>
+      </div>
+    </section>
+
+
+    <script src="../static/settable.js"></script>
+    <script src="../static/flexible.js"></script>
+    <script src="../static/echarts.min.js"></script>
+    <!-- 引入china.js 完成地图模块 -->
+    <script src="../static/china.js"></script>
+    <script src="../static/index.js"></script>
+  </body>
+</html>

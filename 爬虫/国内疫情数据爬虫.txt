@@ -1,0 +1,222 @@
+import datetime
+import pymysql
+import datetime
+import requests
+from bs4 import BeautifulSoup
+import re
+import json
+
+class Province:
+    def __init__(self):
+        self.provinceName = ''
+        self.provinceShortName = ''
+        self.currentConfirmedCount = 0 #现有确诊病例数
+        self.confirmedCount = 0 #累计确诊
+        self.suspectedCount = 0 #疑似病例
+        self.curedCount = 0 #累计治愈
+        self.deadCount = 0#累计死亡
+        self.pub_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')#时间
+        self.cities = []
+        
+    def __str__(self):
+        return 'provinceName:%s provinceShortName:%s currentConfirmedCount:%d \
+        confirmedCount:%d suspectedCount:%d curedCount:%d deadCount :%d '%(self.provinceName,self.provinceShortName,self.currentConfirmedCount,self.confirmedCount,self.suspectedCount,self.curedCount,self.deadCount)
+    
+    
+    def get_info_tuple(self):
+        return ((self.provinceName,self.provinceShortName,self.currentConfirmedCount,self.confirmedCount, self.suspectedCount, self.curedCount,self.deadCount,self.pub_time))
+    
+class City:
+    def __init__(self):
+        self.cityName = ''
+        self.currentConfirmedCount = 0
+        self.confirmedCount = 0
+        self.suspectedCount = 0
+        self.curedCount = 0
+        self.deadCount = 0
+        self.locationId =0
+        self.province = ''
+        self.pub_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')#时间
+        
+    def __str__(self):
+        return 'cityName:%s, currentConfirmedCount:%d, confirmedCount:%d, suspectedCount:%d,\
+        curedCount:%d, deadCount:%d, locationId:%d, pub_time:%s ,province:%s '%(self.cityName, self.currentConfirmedCount, self.confirmedCount, self.suspectedCount, self.curedCount, self.deadCount, self.locationId,self.pub_time,self.province)
+    
+    def get_info_tuple(self):
+        return ((self.cityName, self.currentConfirmedCount, self.confirmedCount, self.suspectedCount, self.curedCount, self.deadCount, self.locationId,self.province,self.pub_time ))
+    
+
+
+class MyDB:
+    def __init__(self,host,user,passwd,db):
+        self.conn = pymysql.connect(host,user,passwd,db,use_unicode=True, charset="utf8")
+        self.cursor = self.conn.cursor()
+    
+    def get_province_list_tuple(self,all_province):
+        info_tuple = []
+        for item in all_province:
+            info_tuple.append(item.get_info_tuple())
+        return info_tuple
+    
+    def get_city_list_tuple(self,all_city):
+        info_tuple = []
+        for item in all_city:
+            info_tuple.append(item.get_info_tuple())
+        return info_tuple
+    
+    #保存省份数据
+    def save_province_datas(self,all_province):
+        
+        date1 = datetime.datetime.now().strftime('%Y-%m-%d')
+        sql1 = 'delete from province_daily_datas where pub_time like "%s"'%(date1 + '%')
+        print(sql1)
+        
+        try:
+            self.cursor.execute(sql1)
+            self.conn.commit()
+            print("之前省份删除成功")
+        except Exception as a:
+            print(a)
+        
+        sql = 'insert into province_daily_datas(provinceName,provinceShortName,currentConfirmedCount,confirmedCount,suspectedCount,curedCount,deadCount,pub_time) \
+        values(%s,%s,%s,%s,%s,%s,%s,%s)'
+        res = self.get_province_list_tuple(all_province)
+        
+        print("+++++++   save_province_datas, datas len:%d"%(len(res)))
+        
+        try:                     
+                
+            self.cursor.executemany(sql,res)
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+            print("???")
+        print("++++++++++++ save_province_datas is over")
+        
+        
+    #保存城市数据
+    def save_city_datas(self,all_city):
+        date2 = datetime.datetime.now().strftime('%Y-%m-%d')
+        sql2 = 'delete from city_daily_datas where pub_time like "%s"'%(date2 + '%')
+        try:
+            self.cursor.execute(sql2)
+            print((date2+"%"))
+            self.conn.commit()
+            print("之前城市删除成功")
+        except Exception as a:
+            print(a)
+        
+        
+        
+        sql = 'insert into city_daily_datas(cityName,currentConfirmedCount,confirmedCount,suspectedCount,curedCount,deadCount,locationId,province,pub_time) \
+        values(%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+        res = self.get_city_list_tuple(all_city)
+        
+        print("+++++++   save_city_daily_datas, datas len:%d"%(len(res)))
+        
+        try:
+            
+            
+                
+            self.cursor.executemany(sql,res)
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+            print("???")
+        print("++++++++++++ save_city_daily_datas is over")     
+    
+    def __del__(self):
+        if self.conn is not None:
+            self.conn.close()
+            
+        
+
+
+class DataService:
+    def __init__(self):
+        self.url = 'https://ncov.dxy.cn/ncovh5/view/pneumonia'
+        self.db = MyDB(host = 'localhost',user = 'root',passwd = '@Zeh253726241',db = 'zhengenhao')
+        
+        
+    #抓取网页
+    def fetch_html_page(self):
+        res = requests.get(self.url)
+        res = res.content.decode('utf-8')
+        return res
+    
+    #解析网页
+    def parse_html_page(self,html):
+        soup = BeautifulSoup(html,'html.parser')
+
+        tag = soup.find('script',attrs = {'id':'getAreaStat'})
+        tagstr = tag.string
+
+        self.results = re.findall('\{"provinceName":.*?"cities":.*?\]\}',tagstr)
+    
+    #提取各个省份及其城市数据
+    def fetch_province_datas(self):
+            all_province = []
+            
+            all_city = []
+            
+            province_name = ''
+
+            for item in self.results:
+                province = Province()
+                obj = json.loads(item)
+                province.provinceName = obj["provinceName"]
+                #提取省份名，放入city()
+                province_name = province.provinceName
+                
+                province.provinceShortName = obj["provinceShortName"]
+                province.currentConfirmedCount = obj["currentConfirmedCount"]
+                province.confirmedCount = obj["confirmedCount"]
+                province.suspectedCount = obj["suspectedCount"]
+                province.curedCount = obj["curedCount"]
+                province.deadCount = obj["deadCount"]
+                
+                #提取城市数据
+                cities  = obj["cities"]
+                for cityItem in cities:
+            #         print(cityItem)
+                    city = City()
+                    
+                    city.province = province_name
+                    city.cityName = cityItem["cityName"]
+                    city.currentConfirmedCount = cityItem["currentConfirmedCount"]
+                    city.confirmedCount = cityItem["confirmedCount"]
+                    city.suspectedCount = cityItem["suspectedCount"]
+                    city.curedCount = cityItem["curedCount"]
+                    city.deadCount = cityItem["deadCount"]
+                    city.locationId = cityItem["locationId"]
+                    all_city.append(city)
+                    province.cities.append(city)
+                all_province.append(province)
+            return all_province,all_city
+        
+    #业务函数
+    def process_data(self):
+        html = self.fetch_html_page()
+        self.parse_html_page(html)
+        all_province,all_city = self.fetch_province_datas()
+#         print(len(all_province))
+#         for item in all_province:
+# #             print(item.get_info_tuple())
+#             for i in item.cities:
+#                 print(i.get_info_tuple())
+#             print("++++++++++++++++++++++++++++++++++++++++++++++"*4)
+
+#         for i in all_city:
+#             print(i.get_info_tuple())
+#         print("++++++++++++++++++++++++++++++++++++++++++++++"*4)
+#         print(len(all_city))
+#         # 保存省份数据
+        self.db.save_province_datas(all_province)
+        # 保存城市数据
+        self.db.save_city_datas(all_city)
+
+# 创建Dataservice对象
+ds = DataService()
+ds.process_data()
+        
+        

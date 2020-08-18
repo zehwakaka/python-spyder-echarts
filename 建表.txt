@@ -1,0 +1,101 @@
+
+CREATE TABLE province_daily_datas (
+  provinceName varchar(30) DEFAULT NULL,
+  provinceShortName varchar(10) DEFAULT NULL,
+  currentConfirmedCount int DEFAULT NULL,
+  confirmedCount int DEFAULT NULL,
+  suspectedCount int DEFAULT NULL,
+  curedCount int DEFAULT NULL,
+  deadCount int DEFAULT NULL,
+  pub_time varchar(30) DEFAULT NULL
+) 
+
+CREATE TABLE city_daily_datas(
+  cityName varchar(30) DEFAULT NULL,
+  currentConfirmedCount int DEFAULT NULL,
+  confirmedCount int DEFAULT NULL,
+  suspectedCount int DEFAULT NULL,
+  curedCount int DEFAULT NULL,
+  deadCount int DEFAULT NULL,
+  locationId int DEFAULT NULL,
+  province varchar(30) DEFAULT NULL,
+  pub_time varchar(30) DEFAULT NULL
+) ;
+
+
+CREATE TABLE country_daily_datas(
+  countryName varchar(30) DEFAULT NULL,
+  currentConfirmedCount int DEFAULT NULL,
+  confirmedCount int DEFAULT NULL,
+  confirmedCountRank int DEFAULT NULL,
+  curedCount int DEFAULT NULL,
+  deadCount int DEFAULT NULL,
+  deadCountRank int DEFAULT NULL,
+  deadRate float DEFAULT NULL,
+  deadRateRank int DEFAULT NULL,
+  pub_time varchar(30) DEFAULT NULL
+) ；
+
+
+CREATE TABLE home_realtime_datas (
+  curConfirm int DEFAULT NULL COMMENT '现有确诊',
+  curConfirmRelative int DEFAULT NULL COMMENT '较昨日新增确诊',
+  asymptomatic int DEFAULT NULL COMMENT '无症状感染',
+  asymptomaticRelative int DEFAULT NULL COMMENT '较昨日新增无症状感染',
+  unconfirmed int DEFAULT NULL COMMENT '现有疑似',
+  unconfirmedRelative int DEFAULT NULL COMMENT '较昨日疑似新增',
+  icu int DEFAULT NULL COMMENT '现有重症',
+  icuRelative int DEFAULT NULL COMMENT '较昨日重症病例新增',
+  confirmed int DEFAULT NULL COMMENT '累计确诊',
+  confirmedRelative int DEFAULT NULL COMMENT '较昨日累计确诊新增',
+  overseasInput int DEFAULT NULL COMMENT '累计境外输入',
+  overseasInputRelative int DEFAULT NULL COMMENT '较昨日累计境外输入新增',
+  cured int DEFAULT NULL COMMENT '累计治愈',
+  curedRelative int DEFAULT NULL COMMENT '较昨日累计治愈新增',
+  died int DEFAULT NULL COMMENT '累计死亡',
+  diedRelative int DEFAULT NULL COMMENT '较昨日累计死亡新增',
+  updatedTime varchar(4000) DEFAULT NULL COMMENT '发布时间'
+)
+
+
+CREATE TABLE outsidesummary_realtime_datas (
+  currentConfirmedCount int DEFAULT NULL COMMENT '现存确诊',
+  confirmedCount int DEFAULT NULL COMMENT '累计确诊',
+  suspectedCount int DEFAULT NULL COMMENT '现存疑似',
+  curedCount int DEFAULT NULL COMMENT '累计治愈',
+  deadCount int DEFAULT NULL COMMENT '累计死亡',
+  suspectedIncr int DEFAULT NULL COMMENT '新增疑似病例',
+  currentConfirmedIncr int DEFAULT NULL COMMENT '新增现存确诊',
+  confirmedIncr int DEFAULT NULL COMMENT '新增累计确诊',
+  curedIncr int DEFAULT NULL COMMENT '新增治愈',
+  deadIncr int DEFAULT NULL COMMENT '新增死亡',
+  updatedTime varchar(200) DEFAULT NULL COMMENT '更新时间'
+) 
+
+
+
+
+
+
+爬虫 如何设计  有哪些模块  有什么效果
+
+
+
+conda activate covid19_guangxi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
